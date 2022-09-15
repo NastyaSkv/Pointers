@@ -7,8 +7,6 @@ using namespace std;
 void FillRand(int* arr, const int n);
 void Print(int* arr, const int n);
 void FillRand_2(int* arr, const int n, int* even, const int t, int* odd, const int w);
-void Print_2(int* even, const int t);
-void Print_3(int* odd, const int w);
 
 void main()
 {
@@ -31,8 +29,8 @@ void main()
 	int* odd = new int[w];                                         //массив для нечетных
 	
 	FillRand_2(arr, n, even, t, odd, w);                           //заполнение массивов
-	Print_2(even, t);                                              //вывод массива
-	Print_3(odd, w);                                               //вывод массива
+	Print(even, t);
+	Print(odd, w);
 
 	delete[] arr;
 	delete[] even;
@@ -63,22 +61,4 @@ void FillRand_2(int* arr, const int n, int* even, const int t, int* odd, const i
 	{
 		(*(arr + i) % 2 == 0) ? (even[j] = arr[i], j++) : (odd[z] = arr[i], z++);
 	}
-}
-
-void Print_2(int* even, const int t)
-{
-	for (int i = 0; i < t; i++)
-	{
-		cout << even[i] << "\t";
-	}
-	cout << endl;
-}
-
-void Print_3(int* odd, const int w)
-{
-	for (int i = 0; i < w; i++)
-	{
-		cout << odd[i] << "\t";
-	}
-	cout << endl;
 }
