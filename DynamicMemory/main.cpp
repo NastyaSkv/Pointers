@@ -7,7 +7,7 @@ using std::endl;
 #define tab "\t";
 
 void FillRand(int arr[], const int n); //объявл. через []
-void FillRand(int** arr , const int rows, const int cols); 
+void FillRand(int** arr, const int rows, const int cols);
 void Print(int* arr, const int n);     //объявл. через указатель
 void Print(int** arr, const int rows, const int cols);
 int* push_back(int* arr, int& n, int value);
@@ -22,20 +22,20 @@ void main()
 	int n;
 	cout << "Введите размер массива: "; cin >> n;
 	int* arr = new int[n];
-	
+
 	FillRand(arr, n);
 	Print(arr, n);
 
 	int value;
 	cout << "Введите добавляемое значение: "; cin >> value;
-	
+
 	arr = push_back(arr, n, value);
 	Print(arr, n);
 
 	delete[] arr;
 
-    //заполнение и вывод без использования функций
-	/* 
+	//заполнение и вывод без использования функций
+	/*
 	for (int i = 0; i < n; i++)
 	{
 		//обращаемся через арифметику указателей и оператор разыменования
@@ -56,16 +56,16 @@ void main()
 	int rows, cols;
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите количество элементов строки: "; cin >> cols;
-	
+
 	//1) Создаем массив указателей:
-	int** arr = new int*[rows];
-	
+	int** arr = new int* [rows];
+
 	//2) Выделяем память под строки двумерного массива:
-	for(int i=0; i<rows; i++)
+	for (int i = 0; i < rows; i++)
 	{
-	arr[i] = new int[cols];
+		arr[i] = new int[cols];
 	}
-	
+
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
 
@@ -92,13 +92,13 @@ void FillRand(int arr[], const int n)  //реализация ф-и через [
 
 void FillRand(int** arr, const int rows, const int cols)
 {
-for (int i = 0; i < rows; i++)
-{
-	for (int j = 0; j < cols; j++)
+	for (int i = 0; i < rows; i++)
 	{
-		arr[i][j] = rand() % 100;
+		for (int j = 0; j < cols; j++)
+		{
+			arr[i][j] = rand() % 100;
+		}
 	}
-}
 }
 
 void Print(int* arr, const int n)      //реализация ф-и через указатель
