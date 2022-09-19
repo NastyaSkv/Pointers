@@ -2,16 +2,14 @@
    1. При помощи цикла for вывести на экран ряд Фибоначчи до указанного предела;
    2. При помощи цикла for вывести на экран заданное количество чисел из ряда Фибоначчи;
    3. Добавить следующие функции :
-   Allocate;               - выделяет память для двумерного массива
-   Clear;			       - удаляет двумерный динамический массив из памяти
+   Allocate();               - выделяет память для двумерного массива
+   Clear();			         - удаляет двумерный динамический массив из памяти
+   push_row_back();          - добавляет строку в конец массива
+   push_row_front();         - добавляет строку в начало массива
+   insert_row();	         - вставляет строку в массив по индексу
+   pop_row_back();           - удаляет последнюю строку из массива
+   pop_row_front();          - удаляет нулевую строку из массива
 
-   push_row_back(? ? ? );  - добавляет строку в конец массива
-   push_row_front(? ? ? ); - добавляет строку в начало массива
-
-   insert_row(? ? ? );	   - вставляет строку в массив по индексу
-
-   pop_row_back(? ? ? );   - удаляет последнюю строку из массива
-   pop_row_front(? ? ? );  - удаляет нулевую строку из массива
    erase_row(? ? ? );	   - удаляет строку из массива по указанному индексу
 
    push_col_back(? ? ? );  - добавляет столбец в конец массива
@@ -37,6 +35,9 @@ void Clear(int** arr, const int rows);
 int** push_row_back(int** arr, int& rows, int& cols);
 int** push_row_front(int** arr, int& rows, int& cols);
 int** insert_row(int** arr, int& rows, int& cols, int index);
+int** pop_row_back(int** arr, int& rows, int& cols);
+int** pop_row_front(int** arr, int& rows, int& cols);
+int** erase_row(int** arr, int& rows, int& cols, int index);
 
 void main()
 {
@@ -62,6 +63,17 @@ void main()
 	arr = insert_row(arr, rows, cols, index);
 	Print(arr, rows, cols);
 
+	cout << endl << "Удалим строку в конце: " << endl;
+	arr = pop_row_back(arr, rows, cols);
+	Print(arr, rows, cols);
+	
+	cout << endl << "Удалим строку в начале: " << endl;
+	arr = pop_row_front(arr, rows, cols);
+	Print(arr, rows, cols);
+
+	cout << endl << "Введите индекс удаляемой строки: "; cin >> index;
+	arr = erase_row(arr, rows, cols, index);
+	Print(arr, rows, cols);
 
 
 	Clear(arr, rows);
@@ -151,27 +163,7 @@ int** insert_row(int** arr, int& rows, int& cols, int index)
 {
 	int** buffer = new int* [rows + 1];
 	Allocate(buffer, rows + 1, cols);
-	/*
-	for (int i = 0, k = i; i <= rows && k <= rows; i++)
-	{
-		if (i == index)
-		{
-			for (int j = 0; j < cols; j++)
-			{
-				buffer[i][j] = {};
-			}
-		}
-		else
-		{
-			for (int j = 0; j < cols; j++)
-			{
-				buffer[i][j] = arr[k][j];
-			}
-			//i++;
-			k++;
-		}
-	}
-	*/
+
 	for (int i = 0, k = i; i <= rows && k <= rows; i++)
 	{
 		for (int j = 0; j < cols; j++)
@@ -183,5 +175,61 @@ int** insert_row(int** arr, int& rows, int& cols, int index)
 	Clear(arr, rows);
 	arr = buffer;
 	rows++;
+	return(arr);
+}
+
+int** pop_row_back(int** arr, int& rows, int& cols)
+{
+	int** buffer = new int* [rows - 1];
+	Allocate(buffer, rows - 1, cols);
+
+	for (int i = 0; i < rows-1; i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			buffer[i][j] = arr[i][j];
+		}
+	}
+	Clear(arr, rows);
+
+	arr = buffer;
+	rows--;
+	return(arr);
+}
+
+int** pop_row_front(int** arr, int& rows, int& cols)
+{
+	int** buffer = new int* [rows - 1];
+	Allocate(buffer, rows - 1, cols);
+
+	for (int i = 0; i < (rows - 1); i++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			buffer[i][j] = arr[i + 1][j];
+		}
+	}
+	Clear(arr, rows);
+	arr = buffer;
+	rows--;
+	return(arr);
+}
+
+int** erase_row(int** arr, int& rows, int& cols, int index)
+{
+	int** buffer = new int* [rows - 1];
+	Allocate(buffer, rows - 1, cols);
+
+	for (int i = 0, k = i; i < (rows-1) && k < (rows-1); i++, k++)
+	{
+		for (int j = 0; j < cols; j++)
+		{
+			(i == index) ? (buffer[i][j] = arr[k+1][j]) : (buffer[i][j] = arr[k][j]);
+		}
+		(i == index) ? (k++) : k;
+	}
+	Clear(arr, rows);
+	arr = buffer;
+	rows--;
 	return(arr);
 }
