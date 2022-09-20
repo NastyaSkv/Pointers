@@ -49,12 +49,16 @@ void main()
 	int** arr = new int* [rows];
 
 	Allocate(arr, rows, cols);       //выделение памяти
-	FillRand(arr, rows, cols);       //заполнение
-	Print(arr, rows, cols);          //вывод на экран
+	//FillRand(arr, rows, cols);       //заполнение
+	//Print(arr, rows, cols);          //вывод на экран
+	cout << "Память выделена" << endl;
+	system("pause");
 
 	cout << endl << "Добавим строку в конец массива: " << endl;
 	arr = push_row_back(arr, rows, cols);
-	Print(arr, rows, cols);
+	//Print(arr, rows, cols);
+	cout << "Строка добавлена!" << endl;
+	system("pause");
 
 	cout << endl << "Добавим строку в начало массива: " << endl;
 	arr = push_row_front(arr, rows, cols);
