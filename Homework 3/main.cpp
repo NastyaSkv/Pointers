@@ -26,9 +26,9 @@ void push_col_back(int** arr, const int rows, int& cols);
 void push_col_front(int** arr, const int rows, int& cols);
 void insert_col(int** arr, const int rows, int& cols, int index);
 
-int** pop_col_back(int** arr, int& rows, int& cols);
-int** pop_col_front(int** arr, int& rows, int& cols);
-int** erase_col(int** arr, int& rows, int& cols, int index);
+void pop_col_back(int** arr, const int rows, int& cols);
+void pop_col_front(int** arr, const int rows, int& cols);
+void erase_col(int** arr, const int rows, int& cols, int index);
 
 void main()
 {
@@ -76,19 +76,19 @@ void main()
 	cout << endl << "Введите индекс вставляемого столбца: "; cin >> index;
 	insert_col(arr, rows, cols, index);
 	Print(arr, rows, cols);
-	/*
-	cout << endl << "Удалим столбец в конце: " << endl;
-	arr = pop_col_back(arr, rows, cols);
-	Print(arr, rows, cols);
 
+	cout << endl << "Удалим столбец в конце: " << endl;
+	pop_col_back(arr, rows, cols);
+	Print(arr, rows, cols);
+	
 	cout << endl << "Удалим столбец в начале: " << endl;
-	arr = pop_col_front(arr, rows, cols);
+	pop_col_front(arr, rows, cols);
 	Print(arr, rows, cols);
 
 	cout << endl << "Введите индекс удаляемого столбца: "; cin >> index;
-	arr = erase_col(arr, rows, cols, index);
+    erase_col(arr, rows, cols, index);
 	Print(arr, rows, cols);
-	*/
+	
 	Clear(arr, rows);
 }
 
@@ -226,7 +226,7 @@ void push_col_front(int** arr, const int rows, int& cols)
 	for (int i = 0; i < rows; i++)
 	{
 		int* buffer = new int[cols + 1]{};
-		for (int j = 0; j < cols; j++)buffer[j+1] = arr[i][j];
+		for (int j = 0; j < cols; j++)buffer[j + 1] = arr[i][j];
 		delete[] arr[i];
 		arr[i] = buffer;
 	}
@@ -238,68 +238,51 @@ void insert_col(int** arr, const int rows, int& cols, int index)
 	for (int i = 0; i < rows; i++)
 	{
 		int* buffer = new int[cols + 1]{};
-		for (int j = 0, k = j; j < cols; j++)
+		for (int j = 0, k = j; j < cols; j++, k++)
 		{
-			(j == index) ? (buffer[j++ +1] = arr[i][k++]) : (buffer[j] = arr[i][k++]);
+			(j == index) ? (buffer[j++ + 1] = arr[i][k]) : (buffer[j] = arr[i][k]);
 		}
 		delete[] arr[i];
 		arr[i] = buffer;
 	}
 	cols++;
 }
-/*
-int** pop_col_back(int** arr, int& rows, int& cols)
-{
-	int** buffer = new int* [rows];
-	Allocate(buffer, rows, cols - 1);
 
+void pop_col_back(int** arr, const int rows, int& cols)
+{
 	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < cols - 1; j++)
-		{
-			buffer[i][j] = arr[i][j];
-		}
+		int* buffer = new int[cols - 1]{};
+		for (int j = 0; j < cols - 1; j++)buffer[j] = arr[i][j];
+		delete[] arr[i];
+		arr[i] = buffer;
 	}
-	Clear(arr, rows);
-
-	arr = buffer;
 	cols--;
-	return(arr);
 }
 
-int** pop_col_front(int** arr, int& rows, int& cols)
+void pop_col_front(int** arr, const int rows, int& cols)
 {
-	int** buffer = new int* [rows];
-	Allocate(buffer, rows, cols - 1);
-
 	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < cols - 1; j++)
-		{
-			buffer[i][j] = arr[i][j + 1];
-		}
+		int* buffer = new int[cols - 1]{};
+		for (int j = 0; j < cols; j++)buffer[j] = arr[i][j+1];
+		delete[] arr[i];
+		arr[i] = buffer;
 	}
-	Clear(arr, rows);
-	arr = buffer;
 	cols--;
-	return(arr);
 }
 
-int** erase_col(int** arr, int& rows, int& cols, int index)
+void erase_col(int** arr, const int rows, int& cols, int index)
 {
-	int** buffer = new int* [rows];
-	Allocate(buffer, rows, cols - 1);
-
 	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0, k = j; j < cols && k < (cols); j++, k++)
+		int* buffer = new int[cols - 1]{};
+		for (int j = 0, k = j; j < cols; j++, k++)
 		{
-			if (j == (cols - 1))break;
-			(j == index) ? (buffer[i][j] = arr[i][k + 1], k++) : (buffer[i][j] = arr[i][k]);
+			(j == index) ? (buffer[j] = arr[i][k++ + 1]) : (buffer[j] = arr[i][k]);
 		}
+		delete[] arr[i];
+		arr[i] = buffer;
 	}
-	Clear(arr, rows);
-	arr = buffer;
 	cols--;
-	return(arr);
-}*/
+}
