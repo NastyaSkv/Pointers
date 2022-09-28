@@ -232,6 +232,19 @@ template<typename T>T* push_back(T* arr, int& n, T value)
 	return arr;
 }
 
+T* buffer = new T[n + 1];
+for (int i = 0; i < n; i++)
+{
+	buffer[i] = arr[i];
+}
+delete[] arr;
+arr = buffer;
+arr[n] = value;
+n++;
+return arr;
+
+
+
 template<typename T>T* pop_back(T* arr, int& n)
 {
 	T* buffer = new T[--n]{};
