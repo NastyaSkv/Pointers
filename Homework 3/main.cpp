@@ -1,4 +1,4 @@
-//1. Оптимизировать функции для работы с двумерными динамическими массивами;
+п»ї//1. РћРїС‚РёРјРёР·РёСЂРѕРІР°С‚СЊ С„СѓРЅРєС†РёРё РґР»СЏ СЂР°Р±РѕС‚С‹ СЃ РґРІСѓРјРµСЂРЅС‹РјРё РґРёРЅР°РјРёС‡РµСЃРєРёРјРё РјР°СЃСЃРёРІР°РјРё;
 
 #include<iostream>
 using namespace std;
@@ -40,74 +40,74 @@ void main()
 {
 	setlocale(LC_ALL, "");
 	int rows, cols, index;
-	cout << "Введите количество строк: "; cin >> rows;
-	cout << "Введите количество элементов строки: "; cin >> cols;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂРѕРє: "; cin >> rows;
+	cout << "Р’РІРµРґРёС‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ СЃС‚СЂРѕРєРё: "; cin >> cols;
 
 	typedef int DataType;
-	DataType** arr = Allocate<DataType>(rows, cols);       //выделение памяти
+	DataType** arr = Allocate<DataType>(rows, cols);       //РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё
 
-	FillRand(arr, rows, cols);                   //заполнение
-	Print(arr, rows, cols);                      //вывод на экран
+	FillRand(arr, rows, cols);                   //Р·Р°РїРѕР»РЅРµРЅРёРµ
+	Print(arr, rows, cols);                      //РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ
 
-	cout << endl << "Добавим строку в конец массива: " << endl;
+	cout << endl << "Р”РѕР±Р°РІРёРј СЃС‚СЂРѕРєСѓ РІ РєРѕРЅРµС† РјР°СЃСЃРёРІР°: " << endl;
 	arr = push_row_back(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Добавим строку в начало массива: " << endl;
+	cout << endl << "Р”РѕР±Р°РІРёРј СЃС‚СЂРѕРєСѓ РІ РЅР°С‡Р°Р»Рѕ РјР°СЃСЃРёРІР°: " << endl;
 	arr = push_row_front(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Введите индекс вставляемой строки: "; cin >> index;
+	cout << endl << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РІСЃС‚Р°РІР»СЏРµРјРѕР№ СЃС‚СЂРѕРєРё: "; cin >> index;
 	arr = insert_row(arr, rows, cols, index);
 	Print(arr, rows, cols);
 
-	cout << endl << "Удалим строку в конце: " << endl;
+	cout << endl << "РЈРґР°Р»РёРј СЃС‚СЂРѕРєСѓ РІ РєРѕРЅС†Рµ: " << endl;
 	arr = pop_row_back(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Удалим строку в начале: " << endl;
+	cout << endl << "РЈРґР°Р»РёРј СЃС‚СЂРѕРєСѓ РІ РЅР°С‡Р°Р»Рµ: " << endl;
 	arr = pop_row_front(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Введите индекс удаляемой строки: "; cin >> index;
+	cout << endl << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ СѓРґР°Р»СЏРµРјРѕР№ СЃС‚СЂРѕРєРё: "; cin >> index;
 	arr = erase_row(arr, rows, cols, index);
 	Print(arr, rows, cols);
 	
-	cout << endl << "Добавим столбец в конец массива: " << endl;
+	cout << endl << "Р”РѕР±Р°РІРёРј СЃС‚РѕР»Р±РµС† РІ РєРѕРЅРµС† РјР°СЃСЃРёРІР°: " << endl;
 	push_col_back(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Добавим столбец в начало массива: " << endl;
+	cout << endl << "Р”РѕР±Р°РІРёРј СЃС‚РѕР»Р±РµС† РІ РЅР°С‡Р°Р»Рѕ РјР°СЃСЃРёРІР°: " << endl;
 	push_col_front(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Введите индекс вставляемого столбца: "; cin >> index;
+	cout << endl << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ РІСЃС‚Р°РІР»СЏРµРјРѕРіРѕ СЃС‚РѕР»Р±С†Р°: "; cin >> index;
 	insert_col(arr, rows, cols, index);
 	Print(arr, rows, cols);
 
-	cout << endl << "Удалим столбец в конце: " << endl;
+	cout << endl << "РЈРґР°Р»РёРј СЃС‚РѕР»Р±РµС† РІ РєРѕРЅС†Рµ: " << endl;
 	pop_col_back(arr, rows, cols);
 	Print(arr, rows, cols);
 	
-	cout << endl << "Удалим столбец в начале: " << endl;
+	cout << endl << "РЈРґР°Р»РёРј СЃС‚РѕР»Р±РµС† РІ РЅР°С‡Р°Р»Рµ: " << endl;
 	pop_col_front(arr, rows, cols);
 	Print(arr, rows, cols);
 
-	cout << endl << "Введите индекс удаляемого столбца: "; cin >> index;
+	cout << endl << "Р’РІРµРґРёС‚Рµ РёРЅРґРµРєСЃ СѓРґР°Р»СЏРµРјРѕРіРѕ СЃС‚РѕР»Р±С†Р°: "; cin >> index;
     erase_col(arr, rows, cols, index);
 	Print(arr, rows, cols);
 	
 	Clear(arr, rows);
 }
 
-template<typename T>T** Allocate(const int rows, const int cols)           //выделяет память для двумерного массива
+template<typename T>T** Allocate(const int rows, const int cols)           //РІС‹РґРµР»СЏРµС‚ РїР°РјСЏС‚СЊ РґР»СЏ РґРІСѓРјРµСЂРЅРѕРіРѕ РјР°СЃСЃРёРІР°
 {
 	T** arr = new T* [rows];
 	for (int i = 0; i < rows; i++)arr[i] = new T[cols] {};
 	return arr;
 }
 
-template<typename T>void Clear(T** arr, const int rows)                     //удаляет двумерный динамический массив из памяти
+template<typename T>void Clear(T** arr, const int rows)                     //СѓРґР°Р»СЏРµС‚ РґРІСѓРјРµСЂРЅС‹Р№ РґРёРЅР°РјРёС‡РµСЃРєРёР№ РјР°СЃСЃРёРІ РёР· РїР°РјСЏС‚Рё
 {
 	for (int i = 0; i < rows; delete[]arr[i++]);
 	delete[] arr;
