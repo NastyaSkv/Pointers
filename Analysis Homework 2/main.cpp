@@ -22,41 +22,73 @@ int** push_row_back(int** arr, int& rows, const int cols);
 int** pop_row_back(int** arr, int& rows, const int cols);
 
 void push_col_back(int** arr, const int rows, int& cols);
+void pop_col_back(int** arr, const int rows, int& cols);
 
+//#define EXECUTION_TIME
 
 void main()
 {
-	setlocale(LC_ALL, "");   
+	setlocale(LC_ALL, "");
 
 	int rows, cols;
 	cout << "Введите количество строк: "; cin >> rows;
 	cout << "Введите элементов строки: "; cin >> cols;
 
 	int** arr = Allocate(rows, cols);
+#ifdef EXECUTION_TIME
 	cout << "Memory allocated!" << endl;
-	//system("pause");
+	system("pause"); 
+#endif //EXECUTION_TIME
+
+#ifndef EXECUTION_TIME
 	FillRand(arr, rows, cols);
 	Print(arr, rows, cols);
+#endif //!EXECUTION_TIME
 
 	cout << "Добавляем строку в конец массива: " << endl;
-	//clock_t start = clock();
+	clock_t start = clock();
 	arr = push_row_back(arr, rows, cols);
-	Print(arr, rows, cols);
-	cout << "Строка добавлена! Mission complete :-)" << endl;
-	//clock_t end = clock();
-	//cout << "Время выполнения операции: " << end - start << " тактов" << endl;
-	arr = pop_row_back(arr, rows, cols);
-	Print(arr, rows, cols);
 
-	//cout << "Для добавления столбца нажмите любую клавишу...\n";
-	//system("pause");
-	//start = clock();
-	push_col_back(arr, rows, cols);
+#ifndef EXECUTION_TIME
 	Print(arr, rows, cols);
-	//end = clock();
-	//CLOCK_PER_SEC;
+#endif //!EXECUTION_TIME
+
+#ifdef EXECUTION_TIME
+	cout << "Строка добавлена! Mission complete :-)" << endl;
+	clock_t end = clock();
+	cout << "Время выполнения операции: " << end - start << " тактов" << endl;
+#endif //EXECUTION_TIME
+
+	arr = pop_row_back(arr, rows, cols);
+
+#ifndef EXECUTION_TIME
+	Print(arr, rows, cols);
+#endif //!EXECUTION_TIME
+
+#ifdef EXECUTION_TIME
+	cout << "Для добавления столбца нажмите любую клавишу...\n";
+	system("pause");
+	start = clock();
+#endif //EXECUTION_TIME
+
+	push_col_back(arr, rows, cols);
+
+#ifndef EXECUTION_TIME
+	Print(arr, rows, cols);
+#endif //!EXECUTION_TIME
+
+#ifdef EXECUTION_TIME
+	end = clock();
+	CLOCK_PER_SEC;
 	cout << "Столбец добавлен! Mission complete :-)" << endl;
-	//cout << "Время выполнения операции: " << end - start << " тактов" << endl;
+	cout << "Время выполнения операции: " << end - start << " тактов" << endl;
+#endif //EXECUTION_TIME
+
+	pop_col_back(arr, rows, cols);
+
+#ifndef EXECUTION_TIME
+	Print(arr, rows, cols);
+#endif //!EXECUTION_TIME
 
 	Clear(arr, rows);
 }
@@ -171,7 +203,7 @@ int** pop_row_back(int** arr, int& rows, const int cols)
 	//1) Удаляем строку из памяти:
 	delete[] arr[rows - 1];
 	//2) Переопределяем массив указателей:
-	int** buffer = new int*[--rows]{};
+	int** buffer = new int* [--rows]{};
 	for (int i = 0; i < rows; i++)buffer[i] = arr[i];
 	delete[]arr;
 	return buffer;
@@ -193,4 +225,16 @@ void push_col_back(int** arr, const int rows, int& cols)
 	//5) После того как в каждую строку добавлен элемент, 
 	//	 в массиве появляется еще один столбец
 	cols++;
+}
+
+void pop_col_back(int** arr, const int rows, int& cols)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols - 1]{};
+		for (int j = 0; j < cols-1; j++)buffer[j] = arr[i][j];
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	cols--;
 }
